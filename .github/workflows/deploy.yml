@@ -1,7 +1,9 @@
 name: Build Image and Push it to Docker Hub
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+    - main
+    
 jobs:
   push_to_registry:
     name: Push Docker image to Docker Hub
