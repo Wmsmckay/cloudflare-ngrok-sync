@@ -45,7 +45,7 @@ def getZoneId():
             return data["result"][0]["id"]
         else:
             print("No Zone by that name")
-    finally:
+    except:
         print("Error getting Zone ID")
 
 
@@ -55,7 +55,7 @@ def getDnsRecordInfo(zoneId, recordId):
         req = requests.get(url=endpoint, headers=headers)
         data = req.json()
         return data
-    finally:
+    except:
         print("Error getting DNS record info")
 
 
@@ -67,7 +67,7 @@ def findDnsRecordId(zoneId, recordInfo):
         for i in data["result"]:
             if i["name"] == recordInfo[0] and i["type"] == recordInfo[1]:
                 return i["id"]
-    finally:
+    except:
         print("Error finding DNS record by ID")
 
 
@@ -79,7 +79,7 @@ def getNgrokTunnelInfo():
         url = addr[6::].split(":", 1)[0]
         port = int(addr.split(":", 2)[2])
         return [url, port]
-    finally:
+    except:
         print("Error getting Ngrok tunnel info")
 
 
@@ -97,7 +97,7 @@ def isPublicUrlSame(SrvRecordId, CnameRecordId, zoneId, ngrok):
         print(f"Ngrok info:     \t{mcCnameUrl}:{mcSrvPort}")
         print(f"Cloudflare info:\t{ngrok[0]}:{ngrok[1]}")
         return False
-    finally:
+    except:
         print("Error checking if URLs are the same.")
 
 
@@ -124,7 +124,7 @@ def changeSrvRecord(zoneId, id, newPort):
         req = requests.put(url=endpoint, headers=headers,
                            data=json.dumps(body))
         data = req.json()
-    finally:
+    except:
         print("Error changing SRV Record.")
 
 
@@ -143,7 +143,7 @@ def changeCnameRecord(zoneId, id, newContent):
         req = requests.put(url=endpoint, headers=headers,
                            data=json.dumps(body))
         data = req.json()
-    finally:
+    except:
         print("Error Changing the CNAME record.")
 
 
@@ -152,7 +152,7 @@ def updateEntries(zoneId, mcCnameId, mcSrvId, ngrok):
         changeCnameRecord(zoneId, mcCnameId, ngrok[0])
         changeSrvRecord(zoneId, mcSrvId, ngrok[1])
         print("Successfully updated")
-    finally:
+    except:
         print("There was an ERROR!!!")
 
 
