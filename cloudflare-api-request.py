@@ -8,9 +8,8 @@ import os
 zoneName = os.getenv("ZONE")
 cloudflare_auth_email = os.getenv("CLOUDFLARE_AUTH_EMAIL")
 cloudflare_auth_key = os.getenv("CLOUDFLARE_AUTH_KEY")
-mcSrvRecord = os.getenv("MC_SRV_RECORD")
-mcCnameRecord = os.getenv("MC_CNAME_RECORD")
-
+mcSrvRecord = [os.getenv("MC_SRV_RECORD"), "SRV"]
+mcCnameRecord = [os.getenv("MC_CNAME_RECORD"),"CNAME"]
 
 url = 'https://api.cloudflare.com/client/v4/zones'
 headers = {
@@ -18,7 +17,6 @@ headers = {
     'X-Auth-Email': cloudflare_auth_email,
     'X-Auth-Key': cloudflare_auth_key
 }
-
 
 def main():
     # print(f"Running script at {datetime.now()}")
@@ -29,8 +27,6 @@ def main():
         mcCnameRecordId = findDnsRecordId(zoneId, mcCnameRecord)
 
         # print(mcSrvRecordId, mcCnameRecordId)
-
-        # check that the ngrok address is the same as the DNS entry on cloudflare
 
         if isPublicUrlSame(mcSrvRecordId, mcCnameRecordId, zoneId, ngrokAddr) == False:
             # change it
