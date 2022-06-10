@@ -2,13 +2,15 @@ from datetime import datetime
 import requests
 import json
 import variables
+import os
 
 
-zoneName = variables.ZONE
-cloudflare_auth_email = variables.CLOUDFLARE_AUTH_EMAIL
-cloudflare_auth_key = variables.CLOUDFLARE_AUTH_KEY
-mcSrvRecord = variables.MCSRVRECORD
-mcCnameRecord = variables.MCCNAMERECORD
+
+zoneName = os.getenv("ZONE")
+cloudflare_auth_email = os.getenv("CLOUDFLARE_AUTH_EMAIL")
+cloudflare_auth_key = os.getenv("CLOUDFLARE_AUTH_KEY")
+mcSrvRecord = os.getenv("MC_SRV_RECORD")
+mcCnameRecord = os.getenv("MC_CNAME_RECORD")
 
 
 url = 'https://api.cloudflare.com/client/v4/zones'
